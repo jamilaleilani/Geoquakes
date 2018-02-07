@@ -19,30 +19,31 @@ $(document).ready(function() {
   })
 
   $.ajax({
-  method: "GET",
-  url: weekly_quakes_endpoint,
-  success: function(response) {
-    console.log(response.features);
-    $(response.features).each(function() {
-      var title = this.properties.title;
-      var timeSince = ((Date.now() - this.properties.time) / 3600000).toFixed(1);
-      var quakeMarker = new google.maps.Marker({
-        position: {lat: this.geometry.coordinates[1], lng: this.geometry.coordinates[0]},
-        map: map,
-        title: title
-      });
 
-      console.log(timeSince);
-      $("#info").html($("#info").html() + "<p>Title: " + title + " / " + timeSince + " hours ago");
-    })
-  },
-  error: function() {
-      alert("There was an error getting data.");
-  }
- });
+    method: "GET",
 
-  $ajax({
+    url: weekly_quakes_endpoint,
 
-  })
+    success: function(response) {
+      console.log(response.features);
+      $(response.features).each(function() {
+        var title = this.properties.title;
+        var timeSince = ((Date.now() - this.properties.time) / 3600000).toFixed(1);
+        var quakeMarker = new google.maps.Marker({
+          position: {lat: this.geometry.coordinates[1], lng: this.geometry.coordinates[0]},
+          map: map,
+          title: title,
+          icon: "images/earthquake.png"
+        });
+        console.log(timeSince);
+        $("#info").html($("#info").html() + "<p>Title: " + title + " / " + timeSince + " hours ago");
+      })
+    },
+
+    error: function() {
+        alert("There was an error getting data.");
+    }
+
+  });
 
 });
